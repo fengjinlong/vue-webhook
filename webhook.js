@@ -11,6 +11,14 @@ let server = http.createServer((req, res) => {
     req.on('data', function (buffer) {
       buffers.push(buffer)
     })
+    req.on('end', function (buffer) {
+      let body = Buffer.concat(buffers)
+      let event = req.header['x-github-event']
+      let signature = req.headers['x-hub-signature']
+      if (signature !== sign(body)) {
+        return res.end(not Allowed)
+      }
+    })
     res.setHeader('Content-Type', 'application/json')
     res.end(JSON.stringify({ok: true}))
   } else {
