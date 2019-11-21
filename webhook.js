@@ -4,7 +4,8 @@ let server = http.createServer((req, res) => {
   // Access-Control-Allow-Origin
   if (req.method === 'POST' && req.url == '/webhook') {
     // res.end(JSON.stringify(users))
-
+    res.setHeader('Content-Type', 'application/json')
+    res.end(JSON.stringify({ok: true}))
   } else {
     res.end('webhook not found')
   }
