@@ -1,6 +1,6 @@
 let http = require('http')
 let server = http.createServer((req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*')
+  // res.setHeader('Access-Control-Allow-Origin', '*')
   // Access-Control-Allow-Origin
   if (req.method === 'POST' && req.url == '/webhook') {
     // res.end(JSON.stringify(users))
