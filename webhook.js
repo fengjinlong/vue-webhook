@@ -18,9 +18,9 @@ let server = http.createServer((req, res) => {
       let body = Buffer.concat(buffers)
       let event = req.headers['x-github-event']
       let signature = req.headers['x-hub-signature']
-      console.log(req)
+      // console.log(req)
       console.log('11133')
-      console.log(req.headers)
+      // console.log(req.headers)
       console.log(sign(body))
       // if (signature !== sign(body)) {
       //   console.log('111222')
