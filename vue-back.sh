@@ -9,7 +9,7 @@ git pull origin master
 echo "开始执行构建"
 docker build -t vue-back:1.0 .
 echo "停止旧容器并删除旧容器"
-docker stop vue-back-container:1.0
-docker rm vue-back-container:1.0
+docker stop vue-back-container
+docker rm vue-back-container
 echo "启动新容器"
-docker container run -p 3000:3000 vue-back-container:1.0 -d vue-back:1.0
+docker container run -p 3000:3000 --name vue-back-container -d vue-back:1.0
