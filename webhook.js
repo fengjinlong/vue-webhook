@@ -35,10 +35,10 @@ let server = http.createServer((req, res) => {
         console.log(payload.repository.name)
         let child = spawn('sh', [`./${payload.repository.name}.sh`])
         let buffers = []
-        child.stdio.on('data', function(buffer) {
+        child.stdout.on('data', function(buffer) {
           buffers.push(buffer)
         })
-        child.stdio.on('end', function(buffer){
+        child.stdout.on('end', function(buffer){
           let log = Buffer.concat(buffers)
           console.log(log)
         })
