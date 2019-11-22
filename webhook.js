@@ -7,7 +7,6 @@ function sign (body) {
 }
 let server = http.createServer((req, res) => {
   console.log('webhook 🍺')
-  // console.log(req)
   if (req.method == 'POST' && req.url == '/webhook') {
     let buffers = []
     console.log('111')
@@ -18,20 +17,15 @@ let server = http.createServer((req, res) => {
       let body = Buffer.concat(buffers)
       let event = req.headers['x-github-event']
       let signature = req.headers['x-hub-signature']
-      // console.log(req)
-      console.log('11133')
-      // console.log(req.headers)
-      console.log(sign(body))
       // if (signature !== sign(body)) {
       //   console.log('111222')
       //   return res.end('not Allowed')
       // }
       res.setHeader('Content-Type', 'application/json')
       res.end(JSON.stringify({ok: true}))
-      console.log(1)
       if (event == 'push') {
         let payload = JSON.parse(body);
-        console.log('payload.repository.name')
+        console.log('项目部署---->')
         console.log(payload.repository.name)
         let child = spawn('sh', [`./${payload.repository.name}.sh`])
         let buffers = []
