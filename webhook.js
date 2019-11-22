@@ -19,7 +19,7 @@ let server = http.createServer((req, res) => {
       let event = req.headers['x-github-event']
       let signature = req.headers['x-hub-signature']
       console.log('11133')
-      console.log(signature)
+      console.log(req.headers)
       console.log(sign(body))
       if (signature !== sign(body)) {
         console.log('111222')
