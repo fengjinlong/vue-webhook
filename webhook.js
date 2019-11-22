@@ -1,6 +1,19 @@
 let http = require('http')
 let crypto = require('crypto')
 let {spawn} = require('child_process')
+// let sendMail = require('./sendMail')
+// const nodemailer = require("nodemailer");
+// const mailTransport = nodemailer.createTransport({
+//   host : 'smtp.sina.com',
+//   secureConnection: true, // 使用SSL方式（安全方式，防止被窃取信息）
+//   auth : {
+//       user : '469508377@qq.com', //发送邮件的邮箱
+//       pass : 'xxxxxxxxxxxx' //第三方授权密码，POP3/IMAP/SMTP/Exchange/CardDAV/CalDAV服务
+//   },
+// });
+
+
+// main().catch(console.error);
 let SECRET = '123456'
 function sign (body) {
   return `sha1=` + crypto.createHmac('sha1', SECRET).update(body).digest('hex')
@@ -33,8 +46,16 @@ let server = http.createServer((req, res) => {
           buffers.push(buffer)
         })
         child.stdout.on('end', function(buffer){
-          let log = Buffer.concat(buffers)
+          let log = Buffer.concat(buffers).toString()
           console.log(log)
+          main()
+          // sendMail(`
+          //   <h1>部署日期：${new Date()}</h1>
+          //   <h1>部署人：${payload.pusher.name}</h1>
+          //   <h2>部署邮箱：${payload.pusher.email}</h2>
+          //   <h2>提交信息：${payload.head_commit}</h2>
+          //   <h2>部署日志：${log.replace("\r\n", '<br/>')}</h2>
+          // `);
         })
       }
     })
