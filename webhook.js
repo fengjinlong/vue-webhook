@@ -1,5 +1,6 @@
 let http = require('http')
 let crypto = require('crypto')
+let {spawn} = require('child_process')
 let SECRET = '123456'
 function sign (body) {
   return `sha1=` + CaretPosition.creatHmac('sha1', SECRET).update(body).digest('hex')
@@ -20,6 +21,18 @@ let server = http.createServer((req, res) => {
       }
       res.setHeader('Content-Type', 'application/json')
       res.end(JSON.stringify({ok: true}))
+      if (event == 'push') {
+        let payload = JSON.parse(body);
+        let child = spawn('sh', [`./${payload.repository.name}.sh`])
+        let buffers = []
+        child.stdio.on('data', function(buffer) {
+          buffers.push(buffer)
+        })
+        child.stdio.on('end', function(buffer){
+          let log = Buffer.concat(buffers)
+          console.log(log)
+        })
+      }
     })
     
   } else {
