@@ -7,6 +7,7 @@ function sign (body) {
 }
 let server = http.createServer((req, res) => {
   console.log('webhook 🍺')
+  console.log(req)
   if (req.method === 'POST' && req.url == '/webhook') {
     let buffers = []
     req.on('data', function (buffer) {
