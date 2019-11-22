@@ -8,8 +8,9 @@ function sign (body) {
 let server = http.createServer((req, res) => {
   console.log('webhook 🍺')
   console.log(req)
-  if (req.method === 'POST' && req.url == '/webhook') {
+  if (req.method == 'POST' && req.url == '/webhook') {
     let buffers = []
+    console.log('111')
     req.on('data', function (buffer) {
       buffers.push(buffer)
     })
@@ -17,7 +18,11 @@ let server = http.createServer((req, res) => {
       let body = Buffer.concat(buffers)
       let event = req.headers['x-github-event']
       let signature = req.headers['x-hub-signature']
+      console.log('11133')
+      console.log(signature)
+      console.log(sign(body))
       if (signature !== sign(body)) {
+        console.log('111222')
         return res.end('not Allowed')
       }
       res.setHeader('Content-Type', 'application/json')
