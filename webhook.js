@@ -18,9 +18,10 @@ let server = http.createServer((req, res) => {
       if (signature !== sign(body)) {
         return res.end('not Allowed')
       }
+      res.setHeader('Content-Type', 'application/json')
+      res.end(JSON.stringify({ok: true}))
     })
-    res.setHeader('Content-Type', 'application/json')
-    res.end(JSON.stringify({ok: true}))
+    
   } else {
     res.end('webhook not found')
   }
