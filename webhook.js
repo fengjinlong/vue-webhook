@@ -16,7 +16,7 @@ let server = http.createServer((req, res) => {
       let event = req.header['x-github-event']
       let signature = req.headers['x-hub-signature']
       if (signature !== sign(body)) {
-        return res.end(not Allowed)
+        return res.end('not Allowed')
       }
     })
     res.setHeader('Content-Type', 'application/json')
