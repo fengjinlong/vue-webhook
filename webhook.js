@@ -3,7 +3,7 @@ let crypto = require('crypto')
 let {spawn} = require('child_process')
 let SECRET = '123456'
 function sign (body) {
-  return `sha1=` + CaretPosition.creatHmac('sha1', SECRET).update(body).digest('hex')
+  return `sha1=` + CaretPosition.createHmac('sha1', SECRET).update(body).digest('hex')
 }
 let server = http.createServer((req, res) => {
   console.log('webhook 🍺')
@@ -14,7 +14,7 @@ let server = http.createServer((req, res) => {
     })
     req.on('end', function (buffer) {
       let body = Buffer.concat(buffers)
-      let event = req.header['x-github-event']
+      let event = req.headers['x-github-event']
       let signature = req.headers['x-hub-signature']
       if (signature !== sign(body)) {
         return res.end('not Allowed')
